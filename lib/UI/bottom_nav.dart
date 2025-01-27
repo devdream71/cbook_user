@@ -1,9 +1,10 @@
 import 'package:cbook_user/UI/category.dart';
-import 'package:cbook_user/UI/category_list.dart';
 import 'package:cbook_user/UI/home.dart';
+import 'package:cbook_user/UI/store_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -14,8 +15,10 @@ class BottomNav extends StatefulWidget {
 
 class BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
-
   String _locationMessage = "Getting location...";
+  final FloatingSearchBarController _searchBarController =
+      FloatingSearchBarController();
+  bool _isSearchActive = false;
 
   @override
   void initState() {
@@ -27,7 +30,6 @@ class BottomNavState extends State<BottomNav> {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       setState(() {
@@ -36,7 +38,6 @@ class BottomNavState extends State<BottomNav> {
       return;
     }
 
-    // Check location permission
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -55,11 +56,9 @@ class BottomNavState extends State<BottomNav> {
       return;
     }
 
-    // Get current location
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    // Reverse geocoding to get address from the position
     List<Placemark> placemarks = await GeocodingPlatform.instance!
         .placemarkFromCoordinates(position.latitude, position.longitude);
 
@@ -76,35 +75,15 @@ class BottomNavState extends State<BottomNav> {
     }
   }
 
-  // Screens for each tab
   static final List<Widget> _pages = <Widget>[
     const Home(),
     const Category(),
-    const Center(
-      child: Text("This feature is not available at the moment."),
-    ),
-    // const CategoryList(),
-    const Center(
-      child: Text("This feature is not available at the moment."),
-    ),
-    const Center(
-      child: Text("This feature is not available at the moment."),
-    ),
-    const Center(
-      child: Text("This feature is not available at the moment."),
-    ),
+    const StoreListScreen(),
+    const Center(child: Text("Restaurant")),
+    const Center(child: Text("Report")),
+    const Center(child: Text("More")),
   ];
 
-  // Titles for each tab
-  static const List<String?> _titles = <String?>[
-    'Home',
-    "online store",
-    "e-commercey",
-    'report, ',
-    'profile',
-  ];
-
-  // Function to handle tab selection
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -122,19 +101,16 @@ class BottomNavState extends State<BottomNav> {
               Icons.pin_drop,
               color: Colors.white,
             ),
-            const SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FittedBox(
-                  child: Text(_locationMessage,
-                      style: const TextStyle(fontSize: 11, color: Colors.white)),
+                  child: Text(
+                    _locationMessage,
+                    style: const TextStyle(fontSize: 11, color: Colors.white),
+                  ),
                 ),
-                // You can add more text here if you need detailed location info
-                // Text('Dhanmondi, Dhaka',
-                //     style: TextStyle(fontSize: 16, color: Colors.white)),
                 const Text('Bangladesh',
                     style: TextStyle(fontSize: 11, color: Colors.white)),
               ],
@@ -143,26 +119,76 @@ class BottomNavState extends State<BottomNav> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-                color: Colors.white,
-              )),
+            onPressed: () {
+              setState(() {
+                _isSearchActive = !_isSearchActive;
+              });
+            },
+            icon: const Icon(Icons.search, color: Colors.white),
+          ),
           IconButton(
               onPressed: () {},
-              icon: const Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              )),
+              icon: const Icon(Icons.shopping_cart, color: Colors.white)),
           IconButton(
               onPressed: () {},
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.white,
-              )),
+              icon: const Icon(Icons.notifications, color: Colors.white)),
         ],
       ),
-      body: _pages[_selectedIndex],
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          _pages[_selectedIndex],
+          if (_isSearchActive)
+            FloatingSearchBar(
+              controller: _searchBarController,
+              hint: 'Search...',
+              scrollPadding: const EdgeInsets.only(top: 16),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionCurve: Curves.easeInOut,
+              physics: const BouncingScrollPhysics(),
+              axisAlignment: 0.0,
+              openAxisAlignment: 0.0,
+              debounceDelay: const Duration(milliseconds: 500),
+              onQueryChanged: (query) {
+                // Handle search query changes
+              },
+              closeOnBackdropTap: true,
+              actions: [
+                FloatingSearchBarAction(
+                  showIfOpened: false,
+                  child: CircularButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        _isSearchActive = false;
+                      });
+                    },
+                  ),
+                ),
+              ],
+              builder: (context, transition) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Material(
+                    color: Colors.white,
+                    elevation: 4.0,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: List.generate(5, (index) {
+                        return ListTile(
+                          title: Text('Search Result $index'),
+                          onTap: () {
+                            // Handle result selection
+                          },
+                        );
+                      }),
+                    ),
+                  ),
+                );
+              },
+            ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[

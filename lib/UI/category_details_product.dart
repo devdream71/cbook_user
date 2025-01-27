@@ -1,5 +1,4 @@
 import 'package:cbook_user/utils/widget/auto_scroll_carousel.dart';
-import 'package:cbook_user/utils/widget/custom_app_bar.dart';
 import 'package:cbook_user/utils/widget/product_card2.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,9 @@ class CategoryDetailsProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: AppBar(
+        title: const Text("Clothing"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(

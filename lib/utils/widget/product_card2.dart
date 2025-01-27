@@ -1,5 +1,4 @@
 import 'package:cbook_user/UI/product_details_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard2 extends StatelessWidget {
@@ -103,7 +102,3 @@ class ProductCard2 extends StatelessWidget {
     );
   }
 }
-
-
-
- 
