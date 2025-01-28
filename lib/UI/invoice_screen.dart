@@ -1,14 +1,21 @@
 import 'package:cbook_user/UI/invoice_details.dart';
 import 'package:flutter/material.dart';
 
-class InvoiceScreen extends StatelessWidget {
+class InvoiceScreen extends StatefulWidget {
   const InvoiceScreen({super.key});
+
+  @override
+  State<InvoiceScreen> createState() => _InvoiceScreenState();
+}
+
+class _InvoiceScreenState extends State<InvoiceScreen> {
+  // Track order status for each product
+  final List<bool> _isOrdered = List.generate(20, (index) => false);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         title: Row(
@@ -52,10 +59,11 @@ class InvoiceScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const InvoiceDetailsPage()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const InvoiceDetailsPage()),
+                        );
                       },
                       child: const Text(
                         "Click Invoice",
@@ -67,11 +75,10 @@ class InvoiceScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 12, color: Colors.black54),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
-
           Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
@@ -110,13 +117,24 @@ class InvoiceScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          // Table Rows
           Expanded(
             child: ListView.builder(
-              itemCount: 20, // Number of rows
+              itemCount: 20,
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               itemBuilder: (context, index) {
+                // Mock stock status
+                final isOutOfStock = index % 3 == 0;
+                final stock = isOutOfStock
+                    ? "Out"
+                    : index % 3 == 1
+                        ? "12"
+                        : "Stock";
+                final stockColor = isOutOfStock
+                    ? Colors.red
+                    : index % 3 == 1
+                        ? Colors.black
+                        : Colors.green;
+
                 return Container(
                   padding: const EdgeInsets.symmetric(
                       vertical: 12.0, horizontal: 8.0),
@@ -134,24 +152,36 @@ class InvoiceScreen extends StatelessWidget {
                       const Expanded(child: Text("Unit")),
                       Expanded(
                         child: Text(
-                          index % 3 == 0
-                              ? "Out"
-                              : index % 3 == 1
-                                  ? "12"
-                                  : "Stock",
+                          stock,
                           style: TextStyle(
-                            color: index % 3 == 0
-                                ? Colors.red
-                                : index % 3 == 1
-                                    ? Colors.black
-                                    : Colors.green,
+                            color: stockColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
                         ),
                       ),
                       const Expanded(child: Text("Price")),
-                      const Expanded(child: Text("Order")),
+                      Expanded(
+                        child: isOutOfStock
+                            ? const SizedBox() // Empty for out-of-stock items
+                            : InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _isOrdered[index] = !_isOrdered[index];
+                                  });
+                                },
+                                child: Text(
+                                  _isOrdered[index] ? "Ordered" : "Order",
+                                  style: TextStyle(
+                                    color: _isOrdered[index]
+                                        ? Colors.green
+                                        : Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                      ),
                     ],
                   ),
                 );

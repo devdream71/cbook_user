@@ -1,5 +1,7 @@
 import 'package:cbook_user/UI/category.dart';
 import 'package:cbook_user/UI/home.dart';
+import 'package:cbook_user/UI/service/google_signin_example.dart';
+import 'package:cbook_user/UI/service/google_signin_view.dart';
 import 'package:cbook_user/UI/store_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -81,7 +83,8 @@ class BottomNavState extends State<BottomNav> {
     const StoreListScreen(),
     const Center(child: Text("Restaurant")),
     const Center(child: Text("Report")),
-    const Center(child: Text("More")),
+    // const GoogleSignInExample(),
+    GoogleSignInView(),
   ];
 
   void _onItemTapped(int index) {

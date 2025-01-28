@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "995841160519",
+    "project_id": "cbook-user",
+    "storage_bucket": "cbook-user.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995841160519:android:2b7b17cd4c0c54c9e44862",
+        "android_client_info": {
+          "package_name": "com.example.cbook_user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeeKU_lU08LZQLAdu6F-Q8_MLQ3EARGJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        },
+        "messaging_service": {
+        "messaging_sender_id": "995841160519"
+      }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
