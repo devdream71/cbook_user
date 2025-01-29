@@ -1,3 +1,4 @@
+import 'package:cbook_user/UI/my_store_order.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceDetailsPage extends StatefulWidget {
@@ -246,7 +247,12 @@ class _InvoiceDetailsPageState extends State<InvoiceDetailsPage> {
                     width: 30,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StoreTransactionsScreen()));
+                    },
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.green),
                     child: const Text(

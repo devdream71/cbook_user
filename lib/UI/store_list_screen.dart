@@ -1,4 +1,5 @@
 import 'package:cbook_user/UI/invoice_screen.dart';
+import 'package:cbook_user/UI/my_store_order.dart';
 import 'package:flutter/material.dart';
 
 class StoreListScreen extends StatelessWidget {
@@ -8,9 +9,12 @@ class StoreListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "My Store",
-          style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+        title: const Padding(
+          padding: EdgeInsets.only(right: 5.0),
+          child: Text(
+            "Dhanmondi,Dhaka,Bangladesh",
+            style: TextStyle(fontSize: 12, color: Colors.black),
+          ),
         ),
         backgroundColor: Colors.white,
         centerTitle: false,
@@ -19,13 +23,16 @@ class StoreListScreen extends StatelessWidget {
           Icons.location_on,
           color: Colors.blue,
         ),
-        actions: const [
-          Center(
+        actions:  [
+          InkWell(
+            onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>StoreTransactionsScreen()));
+            },
             child: Padding(
-              padding: EdgeInsets.only(right: 16.0),
+              padding: EdgeInsets.only(right: 8.0),
               child: Text(
-                "Dhanmondi,Dhaka,Bangladesh",
-                style: TextStyle(fontSize: 12, color: Colors.black),
+                "My Store",
+                style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -48,8 +55,8 @@ class StoreListScreen extends StatelessWidget {
                     ? Colors.grey.withOpacity(0.1)
                     : Colors.white, // Alternate row colors
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,22 +64,35 @@ class StoreListScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Mojomder Store",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue),
+                        Row(
+                          children: [
+                            const Text(
+                              "Mojomder Store",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                            Text(
+                              index % 2 == 0 ? " Open" : " Closed",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: index % 2 == 0
+                                      ? Colors.green
+                                      : Colors.red),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 4),
-                        Text(
+                        const SizedBox(height: 4),
+                        const Text(
                           "84/8, Hatirpol, Shabag, Dhaka",
                           style: TextStyle(fontSize: 12, color: Colors.black54),
                         ),
                       ],
                     ),
                     // Right Section: Categories
-                    Text(
+                    const Text(
                       "Confectionary, Modi,\nJoylary",
                       style: TextStyle(fontSize: 12, color: Colors.black54),
                       textAlign: TextAlign.right,

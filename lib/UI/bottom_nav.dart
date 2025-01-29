@@ -1,5 +1,6 @@
 import 'package:cbook_user/UI/category.dart';
 import 'package:cbook_user/UI/home.dart';
+import 'package:cbook_user/UI/restaurant.dart';
 import 'package:cbook_user/UI/service/google_signin_example.dart';
 import 'package:cbook_user/UI/service/google_signin_view.dart';
 import 'package:cbook_user/UI/store_list_screen.dart';
@@ -81,7 +82,8 @@ class BottomNavState extends State<BottomNav> {
     const Home(),
     const Category(),
     const StoreListScreen(),
-    const Center(child: Text("Restaurant")),
+    // const Center(child: Text("Restaurant")),
+    RestaurantScreen(),
     const Center(child: Text("Report")),
     // const GoogleSignInExample(),
     GoogleSignInView(),
