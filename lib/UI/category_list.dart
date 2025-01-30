@@ -98,7 +98,7 @@ class CategoryList extends StatelessWidget {
               height: 100, // Constrain the height of the horizontal list
               child: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const CategoryDetailsProduct()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>  CategoryDetailsProduct()));
                 },
                 child: ListView.builder(
                   scrollDirection:

@@ -3,7 +3,7 @@ import 'package:cbook_user/utils/widget/product_card2.dart';
 import 'package:flutter/material.dart';
 
 class CategoryDetailsProduct extends StatelessWidget {
-  const CategoryDetailsProduct({super.key});
+   CategoryDetailsProduct({super.key});
 
   static const List<String> categoryList = [
     "Men's",
@@ -12,6 +12,27 @@ class CategoryDetailsProduct extends StatelessWidget {
     "Shoes",
     "Jewelry",
     "Bags",
+  ];
+
+  final List<Map<String, dynamic>> productList = [
+    {
+      "productName": "Lotto Premium Slide",
+      "price": 400.00,
+      "discount": 30,
+      "image": "assets/product_1.png",
+    },
+    {
+      "productName": "Winter Black Jacket",
+      "price": 500.00,
+      "discount": 20,
+      "image": "assets/product_1.png",
+    },
+    {
+      "productName": "Bluetooth Headphones",
+      "price": 1200.00,
+      "discount": 10,
+      "image": "assets/product_1.png",
+    },
   ];
 
   @override
@@ -38,7 +59,7 @@ class CategoryDetailsProduct extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const CategoryDetailsProduct()));
+                                  CategoryDetailsProduct()));
                   },
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -92,7 +113,12 @@ class CategoryDetailsProduct extends StatelessWidget {
                 ),
                 itemCount: 2, // Number of items in the grid
                 itemBuilder: (context, index) {
-                  return const ProductCard2();
+                  return ProductCard2(
+                    productName: productList[index]['productName'],
+                    price: productList[index]['price'],
+                    discount: productList[index]['discount'],
+                    image: productList[index]["image"],
+                  );
                 },
               ),
               const SizedBox(
@@ -121,7 +147,12 @@ class CategoryDetailsProduct extends StatelessWidget {
                 ),
                 itemCount: 2, // Number of items in the grid
                 itemBuilder: (context, index) {
-                  return const ProductCard2();
+                  return   ProductCard2(
+                     productName: productList[index]['productName'],
+                  price: productList[index]['price'],
+                  discount: productList[index]['discount'],
+                  image: productList[index]["image"],
+                  );
                 },
               ),
 
@@ -152,7 +183,12 @@ class CategoryDetailsProduct extends StatelessWidget {
                 ),
                 itemCount: 2, // Number of items in the grid
                 itemBuilder: (context, index) {
-                  return const ProductCard2();
+                  return   ProductCard2(
+                     productName: productList[index]['productName'],
+                  price: productList[index]['price'],
+                  discount: productList[index]['discount'],
+                  image: productList[index]["image"],
+                  );
                 },
               ),
             ],

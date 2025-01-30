@@ -36,6 +36,8 @@ class RestaurantransactionsScreen extends StatelessWidget {
     ),
   ];
 
+  RestaurantransactionsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +48,14 @@ class RestaurantransactionsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left:  12.0),
-            child: Text("My Restaurant", style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold, fontSize: 18 ),),
+            padding: EdgeInsets.only(left: 8.0),
+            child: Text(
+              "My Restaurant",
+              style: TextStyle(
+                  color: Colors.pink,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -55,9 +63,12 @@ class RestaurantransactionsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final transaction = transactions[index];
                 return Card(
-                  margin: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(4.0),
                   child: ListTile(
-                    title: Text(transaction.storeName),
+                    title: Text(
+                      transaction.storeName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     subtitle: Text(transaction.location),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -86,8 +97,3 @@ class RestaurantransactionsScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
- 

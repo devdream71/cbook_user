@@ -2,7 +2,16 @@ import 'package:cbook_user/UI/product_details_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard2 extends StatelessWidget {
-  const ProductCard2({super.key});
+  final String productName;
+  final double price;
+  final int discount;
+  final String image;
+  const ProductCard2(
+      {super.key,
+      required this.productName,
+      required this.price,
+      required this.discount,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +43,7 @@ class ProductCard2 extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16.0),
                     child: Image.asset(
-                      'assets/product_1.png',
+                      image,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -49,10 +58,10 @@ class ProductCard2 extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Ladies Bag",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    Text(
+                      productName,
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,16 +75,16 @@ class ProductCard2 extends StatelessWidget {
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: const Text(
-                                "50% OFF",
-                                style: TextStyle(
+                              child: Text(
+                                "OFF ${discount.toString()} %",
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 10),
                               ),
                             ),
                             const SizedBox(width: 5),
-                            const Text(
-                              "450 ৳",
-                              style: TextStyle(
+                            Text(
+                              price.toString(),
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,

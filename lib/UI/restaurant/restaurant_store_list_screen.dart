@@ -1,7 +1,7 @@
 import 'package:cbook_user/UI/invoice_screen.dart';
 import 'package:cbook_user/UI/my_store_order.dart';
-import 'package:cbook_user/UI/restaurant_my_restaurant.dart';
-import 'package:cbook_user/UI/restaurant_transaction.dart';
+import 'package:cbook_user/UI/restaurant/restaurant_my_restaurant.dart';
+import 'package:cbook_user/UI/restaurant/restaurant_transaction.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantStoreListScreen extends StatelessWidget {

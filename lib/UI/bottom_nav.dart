@@ -1,6 +1,6 @@
 import 'package:cbook_user/UI/category.dart';
 import 'package:cbook_user/UI/home.dart';
-import 'package:cbook_user/UI/restaurant.dart';
+import 'package:cbook_user/UI/restaurant/restaurant.dart';
 import 'package:cbook_user/UI/service/google_signin_example.dart';
 import 'package:cbook_user/UI/service/google_signin_view.dart';
 import 'package:cbook_user/UI/store_list_screen.dart';
@@ -67,9 +67,15 @@ class BottomNavState extends State<BottomNav> {
 
     if (placemarks.isNotEmpty) {
       Placemark placemark = placemarks.first;
+      print(placemark.street);
+      print(placemark.name);
+      print(placemark.postalCode);
+      print(placemark.thoroughfare);
+      print(placemark.subLocality);
+
       setState(() {
         _locationMessage =
-            "${placemark.locality}, ${placemark.administrativeArea}, ${placemark.country}";
+            "${placemark.street}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.postalCode}";
       });
     } else {
       setState(() {
@@ -79,8 +85,8 @@ class BottomNavState extends State<BottomNav> {
   }
 
   static final List<Widget> _pages = <Widget>[
-    const Home(),
-    const Category(),
+    Home(),
+    Category(),
     const StoreListScreen(),
     // const Center(child: Text("Restaurant")),
     RestaurantScreen(),
@@ -113,7 +119,7 @@ class BottomNavState extends State<BottomNav> {
                 FittedBox(
                   child: Text(
                     _locationMessage,
-                    style: const TextStyle(fontSize: 11, color: Colors.white),
+                    style: const TextStyle(fontSize: 10, color: Colors.white),
                   ),
                 ),
                 const Text('Bangladesh',

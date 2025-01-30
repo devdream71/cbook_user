@@ -10,7 +10,7 @@ class GoogleSignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Google Sign-In"),
+        title: const Text("Google Sign-In"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,20 +23,20 @@ class GoogleSignInView extends StatelessWidget {
                 _controller.userEmail.isNotEmpty
                     ? "Signed in as: ${_controller.userEmail.value}"
                     : "Not Signed In",
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               );
             }),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _controller.signInWithGoogle,
-              child: Text("Sign in with Google"),
+              child: const Text("Sign in with Google"),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _controller.signOutFromGoogle,
-              child: Text("Sign out"),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              child: const Text("Sign out"),
             ),
           ],
         ),
@@ -44,3 +44,6 @@ class GoogleSignInView extends StatelessWidget {
     );
   }
 }
+
+
+

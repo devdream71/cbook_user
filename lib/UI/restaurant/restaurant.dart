@@ -1,34 +1,44 @@
-import 'package:cbook_user/UI/restaurant.dart';
-import 'package:cbook_user/UI/resturant_invoice.dart';
+import 'package:cbook_user/UI/restaurant/restaurant_my_restaurant.dart';
+import 'package:cbook_user/UI/restaurant/restaurant_store_list_screen.dart';
+import 'package:cbook_user/UI/restaurant/restaurant_transaction.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantMyRestaurant extends StatelessWidget {
-     RestaurantMyRestaurant({super.key});
+class RestaurantScreen extends StatelessWidget {
+  RestaurantScreen({super.key});
 
-   static const List<String> categoryList = [
+  static const List<String> categoryList = [
     "Meal for",
     "Pandamart",
     "Pick-up",
     "pandago",
+    "Meal for",
+  ];
+
+  static const List<String> categoryListImage = [
+    "assets/healthy-drink.png",
+    "assets/soft_drink.png",
+    "assets/dish.png",
+    "assets/noodles.png",
+    'assets/healthy-drink.png'
   ];
 
   final List<Map<String, dynamic>> foodItems = [
     {
-      'image': 'assets/product_1.png', // Replace with actual image URL
-      'name': 'Rice & Chicken Combo',
+      'image': 'assets/burger.jpg', // Replace with actual image URL
+      'name': 'Rice & Chicken',
       'rating': 4.8,
       'price': 350,
       'time': '45-65 min',
     },
     {
-      'image': 'assets/product_1.png',
-      'name': 'Whopper Jr. & Nuggets Combo',
+      'image': 'assets/burger.jpg',
+      'name': 'Whopper Jr. & Nuggets',
       'rating': 4.8,
       'price': 319,
       'time': '45-65 min',
     },
     {
-      'image': 'assets/product_1.png',
+      'image': 'assets/burger.jpg',
       'name': 'Fried Chicken Combo',
       'rating': 4.8,
       'price': 344,
@@ -36,74 +46,70 @@ class RestaurantMyRestaurant extends StatelessWidget {
     },
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Restaurant & Food")),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Mojomder Store",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        "84/8, Hatirpol, Shabag, Dhaka",
-                        style: TextStyle(color: Colors.black54, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const CircleAvatar(child: Icon(Icons.phone)),
-                      InkWell(
-                        onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ResturantInvoice()),
-                            );
-                          },
-                        child: const Text(
-                          "Click Bill",
-                          style: TextStyle(fontSize: 14, color: Colors.green),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-
-              const Row(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Icon(
+                        const Icon(
+                          Icons.location_on,
+                          color: Colors.blue,
+                        ),
+                        const Text(
+                          "Dhanmondi,Dhaka,Bangladesh",
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RestaurantMyRestaurant()));
+                          },
+                          child: const Text(
+                            "My Restaurant ",
+                            style: TextStyle(
+                                color: Colors.pink,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
                           Icons.widgets,
                           color: Colors.pink,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          "Category",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pink,
-                            fontSize: 20,
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (Context) =>
+                                        const RestaurantStoreListScreen()));
+                          },
+                          child: const Text(
+                            "Category",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.pink,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ],
@@ -122,11 +128,14 @@ class RestaurantMyRestaurant extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const CircleAvatar(
+                                CircleAvatar(
                                   radius: 30,
-                                  backgroundColor: Colors.pink,
-                                  child:
-                                      Icon(Icons.category, color: Colors.white),
+                                  backgroundColor: Colors.pink.shade100,
+                                  child: Image.asset(
+                                    categoryListImage[index],
+                                    height: 35,
+                                    width: 35,
+                                  ),
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
@@ -141,7 +150,7 @@ class RestaurantMyRestaurant extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 260,
+                      height: 220,
                       width: double.maxFinite,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -288,7 +297,7 @@ class RestaurantMyRestaurant extends StatelessWidget {
                                 borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(12)),
                                 child: Image.asset(
-                                  "assets/banner.jpg", // Replace with actual image URL
+                                  "assets/food_banner.PNG", // Replace with actual image URL
                                   height: 180,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
@@ -380,11 +389,10 @@ class RestaurantMyRestaurant extends StatelessWidget {
                     )
                   ]),
             )
-               
-      )
-          );
-     
-       
+          ],
+        ),
+      ),
+    );
   }
 }
 

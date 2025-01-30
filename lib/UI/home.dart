@@ -4,7 +4,28 @@ import 'package:cbook_user/utils/widget/product_card2.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  final List<Map<String, dynamic>> productList = [
+    {
+      "productName": "Lotto Premium Slide",
+      "price": 400.00,
+      "discount": 30,
+      "image": "assets/product_1.png",
+    },
+    {
+      "productName": "Winter Black Jacket",
+      "price": 500.00,
+      "discount": 20,
+      "image": "assets/winter_jacket.png",
+    },
+    {
+      "productName": "Bluetooth Headphones",
+      "price": 120.00,
+      "discount": 10,
+      "image": "assets/bluethooth_headphone.png",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +54,12 @@ class Home extends StatelessWidget {
               ),
               itemCount: 3,
               itemBuilder: (context, index) {
-                return const ProductCard2();
+                return ProductCard2(
+                  productName: productList[index]['productName'],
+                  price: productList[index]['price'],
+                  discount: productList[index]['discount'],
+                  image: productList[index]["image"],
+                );
               },
             ),
           ),
@@ -42,4 +68,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-

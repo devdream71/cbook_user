@@ -1,14 +1,25 @@
-import 'package:cbook_user/UI/restaurant_store_list_screen.dart';
+import 'package:cbook_user/UI/restaurant/restaurant.dart';
+import 'package:cbook_user/UI/restaurant/resturant_invoice.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantScreen extends StatelessWidget {
-  RestaurantScreen({super.key});
+class RestaurantMyRestaurant extends StatelessWidget {
+     RestaurantMyRestaurant({super.key});
 
-  static const List<String> categoryList = [
+   static const List<String> categoryList = [
     "Meal for",
     "Pandamart",
     "Pick-up",
     "pandago",
+    "Meal",
+  ];
+
+   static const List<String> categoryListImage = [
+    "assets/healthy-drink.png",
+    "assets/soft_drink.png",
+    "assets/dish.png",
+    "assets/noodles.png",
+    'assets/healthy-drink.png',
+    "assets/soft_drink.png",
   ];
 
   final List<Map<String, dynamic>> foodItems = [
@@ -35,47 +46,60 @@ class RestaurantScreen extends StatelessWidget {
     },
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Colors.blue,
-                        ),
-                        Text(
-                          "Dhanmondi,Dhaka,Bangladesh",
-                          style: TextStyle(fontSize: 12, color: Colors.black),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () {
+      appBar: AppBar(title: const Text("Restaurant & Food")),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Mojomder Store",
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "84/8, Hatirpol, Shabag, Dhaka",
+                        style: TextStyle(color: Colors.black54, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const CircleAvatar(child: Icon(Icons.phone)),
+                      InkWell(
+                        onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (Context) =>
-                                        RestaurantStoreListScreen()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ResturantInvoice()),
+                            );
                           },
-                          child: Text(
-                            "My Restaurant ",
-                            style: TextStyle(
-                                color: Colors.pink,
-                                fontWeight: FontWeight.bold),
-                          ),
+                        child: const Text(
+                          "Click Bill",
+                          style: TextStyle(fontSize: 14, color: Colors.green),
                         ),
-                      ],
-                    ),
-                    const Row(
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              const Row(
                       children: [
                         Icon(
                           Icons.widgets,
@@ -108,11 +132,11 @@ class RestaurantScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const CircleAvatar(
+                                  CircleAvatar(
                                   radius: 30,
-                                  backgroundColor: Colors.pink,
+                                  backgroundColor: Colors.pink.shade100,
                                   child:
-                                      Icon(Icons.category, color: Colors.white),
+                                      Image.asset(categoryListImage[index], height: 35, width: 35,),
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
@@ -366,10 +390,11 @@ class RestaurantScreen extends StatelessWidget {
                     )
                   ]),
             )
-          ],
-        ),
-      ),
-    );
+               
+      )
+          );
+     
+       
   }
 }
 
