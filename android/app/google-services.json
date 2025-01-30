@@ -1,30 +1,45 @@
 {
   "project_info": {
-    "project_number": "995841160519",
-    "project_id": "cbook-user",
-    "storage_bucket": "cbook-user.firebasestorage.app"
+    "project_number": "280976891092",
+    "project_id": "book-2cf66",
+    "storage_bucket": "book-2cf66.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:995841160519:android:2b7b17cd4c0c54c9e44862",
+        "mobilesdk_app_id": "1:280976891092:android:338643e0b25ebc3361af41",
         "android_client_info": {
-          "package_name": "com.example.cbook_user"
+          "package_name": "com.example.cbook"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "280976891092-ljg12agiqq5il4714h25ga097gid98sn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cbook",
+            "certificate_hash": "d50cb3a53657c9e51fa8eafcce057a2e88a2b29f"
+          }
+        },
+        {
+          "client_id": "280976891092-uv7k022s23lmh4visvldvkgeng3s0joh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCeeKU_lU08LZQLAdu6F-Q8_MLQ3EARGJg"
+          "current_key": "AIzaSyCgzIvAx3btsLbQ2PV2z3Fj9TNOC7lcQEc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        },
-        "messaging_service": {
-        "messaging_sender_id": "995841160519"
-      }
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280976891092-uv7k022s23lmh4visvldvkgeng3s0joh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
       }
     }
   ],

@@ -1,24 +1,29 @@
-import 'package:cbook_user/UI/product_details_page.dart';
+import 'package:cbook_user/provider/card_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// Import the provider class
 
 class ProductCard2 extends StatelessWidget {
   final String productName;
   final double price;
   final int discount;
   final String image;
-  const ProductCard2(
-      {super.key,
-      required this.productName,
-      required this.price,
-      required this.discount,
-      required this.image});
+  final void Function()? onPressed;
+
+  const ProductCard2({
+    super.key,
+    required this.productName,
+    required this.price,
+    required this.discount,
+    required this.image,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProductCard()));
+        // Navigate to product details page
       },
       child: Container(
         decoration: BoxDecoration(
@@ -93,7 +98,18 @@ class ProductCard2 extends StatelessWidget {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Add product to the cart
+                            final product = {
+                              'productName': productName,
+                              'price': price,
+                              'discount': discount,
+                              'image': image,
+                            };
+
+                            Provider.of<MyCardptovider>(context, listen: false)
+                                .addProductToCart(product, context);
+                          },
                           icon: const Icon(
                             Icons.add_circle,
                             color: Colors.blueAccent,

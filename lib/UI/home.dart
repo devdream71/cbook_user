@@ -1,7 +1,9 @@
+import 'package:cbook_user/UI/card/card.dart';
 import 'package:cbook_user/UI/product_details_page.dart';
 import 'package:cbook_user/utils/widget/auto_scroll_carousel.dart';
 import 'package:cbook_user/utils/widget/product_card2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -55,6 +57,9 @@ class Home extends StatelessWidget {
               itemCount: 3,
               itemBuilder: (context, index) {
                 return ProductCard2(
+                  onPressed: () {
+                    
+                  },
                   productName: productList[index]['productName'],
                   price: productList[index]['price'],
                   discount: productList[index]['discount'],

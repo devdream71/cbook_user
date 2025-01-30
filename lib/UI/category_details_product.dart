@@ -114,6 +114,7 @@ class CategoryDetailsProduct extends StatelessWidget {
                 itemCount: 2, // Number of items in the grid
                 itemBuilder: (context, index) {
                   return ProductCard2(
+                    onPressed: (){},
                     productName: productList[index]['productName'],
                     price: productList[index]['price'],
                     discount: productList[index]['discount'],
@@ -148,6 +149,7 @@ class CategoryDetailsProduct extends StatelessWidget {
                 itemCount: 2, // Number of items in the grid
                 itemBuilder: (context, index) {
                   return   ProductCard2(
+                    onPressed: (){},
                      productName: productList[index]['productName'],
                   price: productList[index]['price'],
                   discount: productList[index]['discount'],
@@ -184,6 +186,7 @@ class CategoryDetailsProduct extends StatelessWidget {
                 itemCount: 2, // Number of items in the grid
                 itemBuilder: (context, index) {
                   return   ProductCard2(
+                    onPressed: (){},
                      productName: productList[index]['productName'],
                   price: productList[index]['price'],
                   discount: productList[index]['discount'],

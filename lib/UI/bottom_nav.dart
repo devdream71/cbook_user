@@ -1,3 +1,4 @@
+import 'package:cbook_user/UI/card/card.dart';
 import 'package:cbook_user/UI/category.dart';
 import 'package:cbook_user/UI/home.dart';
 import 'package:cbook_user/UI/restaurant/restaurant.dart';
@@ -138,7 +139,10 @@ class BottomNavState extends State<BottomNav> {
             icon: const Icon(Icons.search, color: Colors.white),
           ),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyCard()));
+              },
               icon: const Icon(Icons.shopping_cart, color: Colors.white)),
           IconButton(
               onPressed: () {},
