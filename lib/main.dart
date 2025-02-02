@@ -1,6 +1,7 @@
 import 'package:cbook_user/UI/bottom_nav.dart';
 import 'package:cbook_user/UI/onbroading.dart';
 import 'package:cbook_user/provider/card_provider.dart';
+import 'package:cbook_user/provider/favorite_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,8 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=>MyCardptovider())
-        
+        ChangeNotifierProvider(create: (context) => MyCardptovider()),
+        ChangeNotifierProvider(create: (context) => FavoritesProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

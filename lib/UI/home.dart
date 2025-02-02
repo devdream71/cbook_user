@@ -58,7 +58,17 @@ class Home extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ProductCard2(
                   onPressed: () {
-                    
+                    print("clicked");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductCardDetails(
+                                  productName: productList[index]
+                                      ['productName'],
+                                  price: productList[index]['price'],
+                                  discount: productList[index]['discount'],
+                                  image: productList[index]['image'],
+                                )));
                   },
                   productName: productList[index]['productName'],
                   price: productList[index]['price'],

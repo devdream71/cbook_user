@@ -1,20 +1,33 @@
+import 'package:cbook_user/UI/favourite_page.dart';
+import 'package:cbook_user/provider/card_provider.dart';
+import 'package:cbook_user/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class ProductCard extends StatefulWidget {
-  const ProductCard({super.key});
+class ProductCardDetails extends StatelessWidget {
+  final String productName;
+  final double price;
+  final int discount;
+  final String image;
 
-  @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
-  int count = 1;
-  int price = 450;
-  int discount = 150;
+  const ProductCardDetails({
+    super.key,
+    required this.productName,
+    required this.price,
+    required this.discount,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final favoritesProvider = Provider.of<FavoritesProvider>(context);
+    final isFavorite = favoritesProvider.isFavorite(productName);
+
+    // Access the MyCardptovider to get the quantity
+    final productProvider = Provider.of<MyCardptovider>(context);
+    final quantity = productProvider.quantity;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
@@ -32,6 +45,30 @@ class _ProductCardState extends State<ProductCard> {
           ],
         ),
         backgroundColor: Colors.lightBlue,
+        actions: [
+          IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? Colors.red : Colors.white,
+            ),
+            onPressed: () {
+              if (isFavorite) {
+                favoritesProvider.removeFromFavorites(productName);
+              } else {
+                favoritesProvider.addToFavorites(productName, image);
+              }
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.list, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FavoritesPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,7 +78,7 @@ class _ProductCardState extends State<ProductCard> {
             Row(
               children: [
                 Image.asset(
-                  'assets/product_1.png', // Replace with your image asset
+                  image,
                   width: 150,
                   height: 100,
                 ),
@@ -49,27 +86,23 @@ class _ProductCardState extends State<ProductCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Ladies Bag',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
                     const SizedBox(height: 8),
                     Text(
-                      '$price',
+                      '৳ ${price}',
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: GoogleFonts.lato().fontFamily),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: GoogleFonts.lato().fontFamily,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Container(
                       color: Colors.red,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
-                      child: const Text(
-                        '50% OFF',
-                        style: TextStyle(color: Colors.white),
+                      child: Text(
+                        '${discount}% OFF',
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
@@ -80,123 +113,46 @@ class _ProductCardState extends State<ProductCard> {
                     IconButton(
                       icon: const Icon(Icons.remove_circle, color: Colors.blue),
                       onPressed: () {
-                        if (count > 1) {
-                          setState(() {
-                            count--;
-                          });
-                        } else {
-                          debugPrint("you cant go below 1");
-                        }
-
-                        print(count);
-                      }, // Decrease quantity logic
+                        productProvider.decreaseQuantity();
+                      },
                     ),
                     Text(
-                      '$count',
+                      '$quantity', // Show the dynamic quantity
                       style: const TextStyle(fontSize: 16),
                     ),
                     IconButton(
                       icon: const Icon(Icons.add_circle, color: Colors.blue),
                       onPressed: () {
-                        setState(() {
-                          count++;
-                        });
-                        print(count);
-                      }, // Increase quantity logic
+                        productProvider.increaseQuantity();
+                      },
                     ),
                   ],
                 ),
               ],
             ),
             const SizedBox(height: 16),
+            Text(
+              productName,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 5),
             const Text(
               'Description',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             const Text(
-              'Baby clothes are soft, lightweight garments designed to be comfortable and gentle on a baby\'s delicate skin. They come in a variety of styles and fabrics, like cotton, which is breathable and soft, making it ideal for babies. Typical items include',
+              'This is a high-quality product with premium features, ensuring great durability and value for money.',
               style: TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 36),
-
-            _buildRowWithUnderline("Price", "$price"),
-            _buildRowWithUnderline("Qty", "${count}"),
-            _buildRowWithUnderline("Total", "${price * count}"),
-            _buildRowWithUnderline("Discount", "$discount"),
-            _buildRowWithUnderline("Amount", "${(price * count) + discount}"),
-
-            // Table(
-            //   columnWidths: const {
-            //     0: FlexColumnWidth(1),
-            //     1: FlexColumnWidth(3),
-            //   },
-            //   border: TableBorder.all(color: Colors.grey),
-            //   children: [
-            //     const TableRow(
-            //       children: [
-            //         Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('Price', style: TextStyle(fontSize: 14)),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('450', style: TextStyle(fontSize: 14)),
-            //         ),
-            //       ],
-            //     ),
-            //     TableRow(
-            //       children: [
-            //         const Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('Qty', style: TextStyle(fontSize: 14)),
-            //         ),
-            //         Padding(
-            //           padding: const EdgeInsets.all(8.0),
-            //           child:
-            //               Text('$count', style: const TextStyle(fontSize: 14)),
-            //         ),
-            //       ],
-            //     ),
-            //     TableRow(
-            //       children: [
-            //         const Padding(
-            //           padding: const EdgeInsets.all(8.0),
-            //           child: Text('Total', style: TextStyle(fontSize: 14)),
-            //         ),
-            //         Padding(
-            //           padding: const EdgeInsets.all(8.0),
-            //           child: Text('${count * price}',
-            //               style: const TextStyle(fontSize: 14)),
-            //         ),
-            //       ],
-            //     ),
-            //     const TableRow(
-            //       children: [
-            //         Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('Discount', style: TextStyle(fontSize: 14)),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('150', style: TextStyle(fontSize: 14)),
-            //         ),
-            //       ],
-            //     ),
-            //     const TableRow(
-            //       children: [
-            //         Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('Amount', style: TextStyle(fontSize: 14)),
-            //         ),
-            //         Padding(
-            //           padding: EdgeInsets.all(8.0),
-            //           child: Text('1200', style: TextStyle(fontSize: 14)),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
+            _buildRowWithUnderline("Price", "৳ ${price}"),
+            _buildRowWithUnderline("Qty", "$quantity"), // Use dynamic quantity
+            _buildRowWithUnderline("Total",
+                "৳ ${price * quantity}"), // Calculate total with dynamic quantity
+            _buildRowWithUnderline("Discount", "৳ ${discount}"),
+            _buildRowWithUnderline(
+                "Amount", "৳ ${(price * quantity) - discount}"),
 
             const SizedBox(height: 16),
             const Padding(
@@ -207,11 +163,15 @@ class _ProductCardState extends State<ProductCard> {
                   Text(
                     'Final Submit',
                     style: TextStyle(
-                        color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16),
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
                   ),
-                  Text('Add to Card',
+                  Text('Add to Cart',
                       style: TextStyle(
-                          color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16))
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16)),
                 ],
               ),
             ),
@@ -229,21 +189,12 @@ class _ProductCardState extends State<ProductCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                label,
-                style: const TextStyle(fontSize: 16),
-              ),
-              Text(
-                value,
-                style: const TextStyle(fontSize: 16),
-              ),
+              Text(label, style: const TextStyle(fontSize: 16)),
+              Text(value, style: const TextStyle(fontSize: 16)),
             ],
           ),
           const SizedBox(height: 4),
-          Container(
-            height: 1,
-            color: Colors.black,
-          ),
+          Container(height: 1, color: Colors.black),
           const SizedBox(height: 4),
         ],
       ),

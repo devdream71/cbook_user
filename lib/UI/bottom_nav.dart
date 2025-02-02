@@ -5,10 +5,12 @@ import 'package:cbook_user/UI/restaurant/restaurant.dart';
 import 'package:cbook_user/UI/service/google_signin_example.dart';
 import 'package:cbook_user/UI/service/google_signin_view.dart';
 import 'package:cbook_user/UI/store_list_screen.dart';
+import 'package:cbook_user/provider/card_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
+import 'package:provider/provider.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -106,49 +108,89 @@ class BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Row(
-          children: [
-            const Icon(
-              Icons.pin_drop,
-              color: Colors.white,
-            ),
-            const SizedBox(width: 5),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  child: Text(
-                    _locationMessage,
-                    style: const TextStyle(fontSize: 10, color: Colors.white),
+          backgroundColor: Colors.blue,
+          title: Row(
+            children: [
+              const Icon(
+                Icons.pin_drop,
+                color: Colors.white,
+              ),
+              const SizedBox(width: 5),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      _locationMessage,
+                      style: const TextStyle(fontSize: 10, color: Colors.white),
+                    ),
                   ),
-                ),
-                const Text('Bangladesh',
-                    style: TextStyle(fontSize: 11, color: Colors.white)),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _isSearchActive = !_isSearchActive;
-              });
-            },
-            icon: const Icon(Icons.search, color: Colors.white),
+                  const Text('Bangladesh',
+                      style: TextStyle(fontSize: 11, color: Colors.white)),
+                ],
+              ),
+            ],
           ),
-          IconButton(
+          actions: [
+            IconButton(
               onPressed: () {
+                setState(() {
+                  _isSearchActive = !_isSearchActive;
+                });
+              },
+              icon: const Icon(Icons.search, color: Colors.white),
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MyCard()));
+                },
+                icon: const Icon(Icons.notifications, color: Colors.white)),
+            InkWell(
+              onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyCard()));
               },
-              icon: const Icon(Icons.shopping_cart, color: Colors.white)),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications, color: Colors.white)),
-        ],
-      ),
+              child: Stack(clipBehavior: Clip.none, children: [
+                const IconButton(
+                  onPressed: null,
+                  icon:
+                      Icon(Icons.shopping_cart, color: Colors.white, size: 28),
+                ),
+                Consumer<MyCardptovider>(
+                    builder: (context, cartProvider, child) {
+                  return cartProvider.cartItemCount > 0
+                      ? Positioned(
+                          right: 4,
+                          top: 4,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 18,
+                              minHeight: 18,
+                            ),
+                            child: Text(
+                              cartProvider.cartItemCount.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink();
+                })
+              ]),
+            )
+          ]),
       body: Stack(
         fit: StackFit.expand,
         children: [
